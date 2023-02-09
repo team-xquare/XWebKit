@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift",
+      "state" : {
+        "revision" : "b4307ba0b6425c0ba4178e138799946c3da594f8",
+        "version" : "6.5.0"
+      }
+    },
+    {
+      "identity" : "semicolondesign_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/semicolondsm/SemicolonDesign_iOS",
+      "state" : {
+        "revision" : "cc71850bd64ec0b9419c853aa13b24317eabfdac",
+        "version" : "1.10.0"
+      }
+    }
+  ],
+  "version" : 2
+}
