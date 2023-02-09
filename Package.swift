@@ -13,7 +13,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/semicolondsm/SemicolonDesign_iOS", from: "1.9.4")
+        .package(url: "https://github.com/semicolondsm/SemicolonDesign_iOS", from: "1.10.0")
     ],
     targets: [
         .target(
