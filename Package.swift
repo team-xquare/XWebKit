@@ -13,14 +13,18 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/semicolondsm/SemicolonDesign_iOS", from: "1.9.4")
+        .package(url: "https://github.com/ReactiveX/RxSwift", from: "6.5.0"),
+        .package(url: "https://github.com/semicolondsm/SemicolonDesign_iOS", from: "1.10.0")
     ],
     targets: [
         .target(
             name: "XWebKit",
             dependencies: [
+                .product(name: "RxCocoa", package: "RxSwift"),
+                .product(name: "RxSwift", package: "RxSwift"),
                 .product(name: "SemicolonDesign", package: "SemicolonDesign_iOS")
-            ]
+            ],
+            path: "XWebKit"
         )
     ]
 )
