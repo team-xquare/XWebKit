@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/semicolondsm/SemicolonDesign_iOS",
       "state" : {
-        "revision" : "cc71850bd64ec0b9419c853aa13b24317eabfdac",
-        "version" : "1.10.0"
+        "revision" : "f1e676610096590d347276301f1e4754920aeeb7",
+        "version" : "1.10.7"
       }
     }
   ],

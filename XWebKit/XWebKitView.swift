@@ -10,15 +10,22 @@ public struct XWebKitView: View {
         self.state = .init(
             urlString: urlString,
             accessToken: accessToken,
-            isPresentated: .constant(true)
+            isPresentated: .constant(true),
+            naviagteRightButtonText: nil
         )
     }
 
-    init(urlString: String, accessToken: String, isPresentated: Binding<Bool>) {
+    init(
+        urlString: String,
+        accessToken: String,
+        isPresentated: Binding<Bool>,
+        naviagteRightButtonText: String?
+    ) {
         self.state = .init(
             urlString: urlString,
             accessToken: accessToken,
-            isPresentated: isPresentated
+            isPresentated: isPresentated,
+            naviagteRightButtonText: naviagteRightButtonText
         )
     }
 
@@ -38,13 +45,22 @@ public struct XWebKitView: View {
                     XWebKitView(
                         urlString: self.state.naviagteLink,
                         accessToken: self.state.accessToken,
-                        isPresentated: self.$state.needsToNavigate
+                        isPresentated: self.$state.needsToNavigate,
+                        naviagteRightButtonText: self.state.naviagteRightButtonText
                     )
                     .navigationTitle(self.state.naviagteTitle)
                     .navigationBarTitleDisplayMode(.inline)
                 },
                 label: { EmptyView() }
             )
+        }
+        .toolbar {
+            if let rightButtonText = self.state.rightButtonText {
+                Button(rightButtonText) {
+                    self.state.naviagteRightButtonTap = ()
+                }
+                .disabled(!self.state.isRightButtonEnabled)
+            }
         }
         .sdAlert(isPresented: self.$state.isAlertPresented) {
             SDAlert(
@@ -68,6 +84,12 @@ public struct XWebKitView: View {
         .sdPhotoPicker(
             isPresented: self.$state.isPhotoPickerPresented,
             selection: self.$state.selectedImages
+        )
+        .sdBottomSheet(
+            isPresented: self.$state.isActionSheetPresented,
+            buttons: self.state.actionSheetMenu.enumerated().map { menu in
+                return (menu.element, { self.state.selectedMenuIndex = menu.offset })
+            }
         )
     }
 }

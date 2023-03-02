@@ -4,7 +4,6 @@
 import Foundation
 
 import WebKit
-import RxCocoa
 import RxSwift
 
 extension Reactive where Base: WKWebView {

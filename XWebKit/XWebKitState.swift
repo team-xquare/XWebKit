@@ -13,10 +13,16 @@ class XWebKitState: ObservableObject {
 
     @Published var loadingProgress: Double = 0.0
 
-    // navigate
+    // 현제 네이게이션 정보
+    var rightButtonText: String?
+    @Published var isRightButtonEnabled: Bool = false
+    @Published var naviagteRightButtonTap: Void?
+
+    // navigate - 네비게이팅 될곳의 정보
     @Published var needsToNavigate: Bool = false
     @Published var naviagteTitle: String = ""
     @Published var naviagteLink: String = ""
+    @Published var naviagteRightButtonText: String?
 
     // imageDetail
     @Published var isImageViewerPresented: Bool = false
@@ -34,15 +40,32 @@ class XWebKitState: ObservableObject {
     @Published var isErrorAlertPresented: Bool = false
     @Published var errorMessage: String = ""
 
+    // actionSheet
+    @Published var actionSheetId: String = ""
+    @Published var actionSheetMenu: [String] = []
+    @Published var isActionSheetPresented: Bool = false
+    @Published var selectedMenuIndex: Int?
+
     // photoPicker
     @Published var photoPickerId: String = ""
     @Published var isPhotoPickerPresented: Bool = false
     @Published var selectedImages: [UIImage] = []
 
-    init(urlString: String, accessToken: String = "", isPresentated: Binding<Bool>) {
+    // timePicker
+    @Published var timePickerId: String = ""
+    @Published var isTimePickerPresented: Bool = false
+    @Published var selectedTime: String?
+
+    init(
+        urlString: String,
+        accessToken: String = "",
+        isPresentated: Binding<Bool>,
+        naviagteRightButtonText: String?
+    ) {
         self.urlString = urlString
         self.accessToken = accessToken
         self.isPresentated = isPresentated
+        self.rightButtonText = naviagteRightButtonText
     }
 
 }

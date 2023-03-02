@@ -20,11 +20,14 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler
                                didReceive message: WKScriptMessage) {
         switch message.name {
         case "navigate": self.processNavigateBridge(message.body)
+        case "isRightButtonEnabled": self.processIsRightButtonEnabledBridge(message.body)
         case "imageDetail": self.preocessImageDetailBridge(message.body)
         case "back": self.processBackBridge()
         case "confirm": self.processConfirmBridge(message.body)
         case "error": self.processErrorBridge(message.body)
         case "photoPicker": self.processPhotoPickerBridge(message.body)
+        case "actionSheet": self.processActionSheet(message.body)
+        case "timePicker": self.processTimePicker(message.body)
         default: break
         }
     }
@@ -38,18 +41,30 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler
 extension WebViewCoordinator {
 
     private func processNavigateBridge(_ messageBody: Any) {
-        guard let messageBodyAsString = messageBody as? String else { return }
-        let messageBodyAsDictionary = messageBodyAsString.convertToDictionary()
-        self.parent.state.naviagteLink = parent.state.urlString+(messageBodyAsDictionary["url"] ?? "")
-        self.parent.state.naviagteTitle = messageBodyAsDictionary["title"] ?? ""
+        guard let messageBody = try? MessageBodyDecoder.share.decode(NavigateResponse.self, from: messageBody) else {
+            return
+        }
+        print(messageBody)
+        self.parent.state.naviagteLink = parent.state.urlString+messageBody.url
+        self.parent.state.naviagteTitle = messageBody.title
+        self.parent.state.naviagteRightButtonText = messageBody.rightButtonText
         self.parent.state.needsToNavigate = true
     }
 
+    private func processIsRightButtonEnabledBridge(_ messageBody: Any) {
+        guard let messageBody = try? MessageBodyDecoder.share.decode(IsRightButtonEnabledResponse.self, from: messageBody) else {
+            return
+        }
+        print(messageBody)
+        self.parent.state.isRightButtonEnabled = messageBody.isEnabled
+        print(self.parent.state.isRightButtonEnabled)
+    }
+
     private func preocessImageDetailBridge(_ messageBody: Any) {
-        guard let messageBodyAsString = messageBody as? String else { return }
-        self.parent.state.images = messageBodyAsString
-            .convertToArray()
-            .map { URL(string: $0)! }
+        guard let messageBody = try? MessageBodyDecoder.share.decode(ImageDetailResponse.self, from: messageBody) else {
+            return
+        }
+        self.parent.state.images = messageBody.images.map { URL(string: $0)! }
         self.parent.state.isImageViewerPresented = true
     }
 
@@ -70,10 +85,23 @@ extension WebViewCoordinator {
     }
 
     private func processErrorBridge(_ messageBody: Any) {
-        guard let messageBodyAsString = messageBody as? String else { return }
-        let messageBodyAsDictionary = messageBodyAsString.convertToDictionary()
-        self.parent.state.errorMessage = messageBodyAsDictionary["message"] ?? ""
+        guard let messageBody = try? MessageBodyDecoder.share.decode(ErrorRespose.self, from: messageBody) else {
+            return
+        }
+        self.parent.state.errorMessage = messageBody.message
         self.parent.state.isErrorAlertPresented = true
+    }
+
+    private func processActionSheet(_ messageBody: Any) {
+        guard let messageBody = try? MessageBodyDecoder.share.decode(ActionSheetResponse.self, from: messageBody) else {
+            return
+        }
+        print("processActionSheet")
+        print(messageBody)
+        self.parent.state.selectedMenuIndex = nil
+        self.parent.state.actionSheetId = messageBody.id
+        self.parent.state.actionSheetMenu = messageBody.menu
+        self.parent.state.isActionSheetPresented = true
     }
 
     private func processPhotoPickerBridge(_ messageBody: Any) {
@@ -84,31 +112,9 @@ extension WebViewCoordinator {
         self.parent.state.isPhotoPickerPresented = true
     }
 
-}
-
-fileprivate extension String {
-
-    func convertToDictionary() -> [String: String] {
-        guard let data = self.data(using: .utf8) else { return [:] }
-        do {
-            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] ?? [:]
-        } catch {
-            return [:]
-        }
-    }
-
-    func convertToArray() -> [String] {
-        return self
-            .removeQuotationMarks()
-            .components(separatedBy: ", ")
-            .map { $0.removeQuotationMarks() }
-    }
-
-    func removeQuotationMarks() -> String {
-        var result = self
-        result.removeFirst()
-        result.removeLast()
-        return result
+    private func processTimePicker(_ messageBody: Any) {
+        print("processTimePicker")
+        print(messageBody)
     }
 
 }
