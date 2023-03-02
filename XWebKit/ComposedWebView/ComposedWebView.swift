@@ -2,9 +2,9 @@ import UIKit
 import SwiftUI
 
 import WebKit
-import Combine
 import RxCocoa
 import RxSwift
+import Combine
 
 struct ComposedWebView: UIViewRepresentable {
 
@@ -23,6 +23,7 @@ struct ComposedWebView: UIViewRepresentable {
         self.setEvaluateJavaScript(webView: webView)
 
         if let url = URL(string: self.state.urlString) {
+            print(url)
             let urlRequest = URLRequest(url: url)
             webView.load(urlRequest)
         }
@@ -48,10 +49,17 @@ extension ComposedWebView {
             "accessToken": self.state.accessToken
         ], configuration: configuration)
 
-        self.registerBridge(
-            name: BridgeType.allCases.map { $0.rawValue },
-            configuration: configuration
-        )
+        self.registerBridge(name: [
+            "navigate",
+            "isRightButtonEnabled",
+            "imageDetail",
+            "back",
+            "confirm",
+            "error",
+            "photoPicker",
+            "actionSheet",
+            "timePicker"
+        ], configuration: configuration)
 
         return configuration
     }
@@ -82,6 +90,18 @@ extension ComposedWebView {
 
     private func setEvaluateJavaScript(webView: WKWebView) {
 
+        self.state.$naviagteRightButtonTap
+            .compactMap { $0 }
+            .sink { _ in
+                print("naviagteRightButtonTap")
+                self.evaluateJavaScript(
+                    webView: webView,
+                    bridgeName: "rightButtonTaped",
+                    data: "{ }"
+                )
+            }
+            .store(in: &self.state.cancellables)
+
         self.state.$alertResponse
             .combineLatest(self.state.$confirmId)
             .filter { $0.0 != nil }
@@ -108,6 +128,31 @@ extension ComposedWebView {
                     bridgeName: "photoPicker",
                     data: "{ id: \"\($0.1)\", photos: \($0.0) }"
                 )
+            }
+            .store(in: &self.state.cancellables)
+
+        self.state.$selectedMenuIndex
+            .combineLatest(self.state.$actionSheetId)
+            .filter { $0.0 != nil }
+            .sink {
+                print($0)
+                self.evaluateJavaScript(
+                    webView: webView,
+                    bridgeName: "actionSheet",
+                    data: "{ id: \"\($0.1)\", index: \($0.0 ?? 0) }"
+                )
+            }
+            .store(in: &self.state.cancellables)
+
+        self.state.$selectedTime
+            .filter { $0 != nil }
+            .sink { _ in
+                print("timePicker")
+//                self.evaluateJavaScript(
+//                    webView: webView,
+//                    bridgeName: "rightButtonTaped",
+//                    data: "{ }"
+//                )
             }
             .store(in: &self.state.cancellables)
 
