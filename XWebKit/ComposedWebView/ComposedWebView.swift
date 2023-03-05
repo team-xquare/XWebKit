@@ -145,14 +145,15 @@ extension ComposedWebView {
             .store(in: &self.state.cancellables)
 
         self.state.$selectedTime
-            .filter { $0 != nil }
-            .sink { _ in
+            .combineLatest(self.state.$timePickerId)
+            .filter { $0.0 != "" }
+            .sink {
                 print("timePicker")
-//                self.evaluateJavaScript(
-//                    webView: webView,
-//                    bridgeName: "rightButtonTaped",
-//                    data: "{ }"
-//                )
+                self.evaluateJavaScript(
+                    webView: webView,
+                    bridgeName: "timePicker",
+                    data: "{ id: \"\($0.1)\", time: \"\($0.0)\" }"
+                )
             }
             .store(in: &self.state.cancellables)
 

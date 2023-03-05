@@ -53,8 +53,9 @@ class XWebKitState: ObservableObject {
 
     // timePicker
     @Published var timePickerId: String = ""
+    @Published var timePickerCurrentTime: String = ""
     @Published var isTimePickerPresented: Bool = false
-    @Published var selectedTime: String?
+    @Published var selectedTime: String = ""
 
     init(
         urlString: String,
