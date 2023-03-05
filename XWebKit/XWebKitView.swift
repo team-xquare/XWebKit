@@ -91,5 +91,10 @@ public struct XWebKitView: View {
                 return (menu.element, { self.state.selectedMenuIndex = menu.offset })
             }
         )
+        .sdTimePicker(
+            isPresented: self.$state.isTimePickerPresented,
+            currentDate: self.$state.timePickerCurrentTime,
+            date: self.$state.selectedTime
+        )
     }
 }
