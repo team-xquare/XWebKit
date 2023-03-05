@@ -108,6 +108,7 @@ extension WebViewCoordinator {
         guard let messageBody = try? MessageBodyDecoder.share.decode(PhotoPickerResponse.self, from: messageBody) else {
             return
         }
+        self.parent.state.selectedImages = []
         self.parent.state.photoPickerId = messageBody.id
         self.parent.state.isPhotoPickerPresented = true
     }
