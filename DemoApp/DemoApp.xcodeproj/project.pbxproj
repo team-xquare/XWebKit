@@ -23,6 +23,7 @@
 		92A9BF21299534EA00B4C609 /* XQUAREApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XQUAREApp.swift; sourceTree = "<group>"; };
 		92A9BF22299534EA00B4C609 /* WebViewTesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewTesterView.swift; sourceTree = "<group>"; };
 		92A9BF23299534EA00B4C609 /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		92D8E72329B487160086F4D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 		92A9BF0C2995345A00B4C609 /* DemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				92D8E72229B487160086F4D6 /* SupportingFiles */,
 				92A9BF1D299534EA00B4C609 /* Resources */,
 				92A9BF20299534EA00B4C609 /* Sources */,
 			);
@@ -97,6 +99,14 @@
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
+		};
+		92D8E72229B487160086F4D6 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				92D8E72329B487160086F4D6 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -303,7 +313,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5G56CAU886;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "XWebKit DemoApp";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -336,7 +347,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5G56CAU886;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "XWebKit DemoApp";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
