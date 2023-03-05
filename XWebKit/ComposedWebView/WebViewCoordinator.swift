@@ -114,8 +114,14 @@ extension WebViewCoordinator {
     }
 
     private func processTimePicker(_ messageBody: Any) {
+        guard let messageBody = try? MessageBodyDecoder.share.decode(TimePickerResponse.self, from: messageBody) else {
+            return
+        }
         print("processTimePicker")
         print(messageBody)
+        self.parent.state.selectedTime = ""
+        self.parent.state.timePickerId = messageBody.id
+        self.parent.state.isTimePickerPresented = true
     }
 
 }
