@@ -152,7 +152,7 @@ extension ComposedWebView {
                 self.evaluateJavaScript(
                     webView: webView,
                     bridgeName: "timePicker",
-                    data: "{ id: \"\($0.1)\", time: \($0.0) }"
+                    data: "{ id: \"\($0.1)\", time: \"\($0.0)\" }"
                 )
             }
             .store(in: &self.state.cancellables)
