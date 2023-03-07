@@ -85,12 +85,11 @@ public struct XWebKitView: View {
             isPresented: self.$state.isPhotoPickerPresented,
             selection: self.$state.selectedImages
         )
-        .sdBottomSheet(
-            isPresented: self.$state.isActionSheetPresented,
-            buttons: self.state.actionSheetMenu.enumerated().map { menu in
+        .sdBottomSheet(isPresented: self.$state.isActionSheetPresented, sdBottomSheet: {
+            SDBottomSheet(buttons: self.state.actionSheetMenu.enumerated().map { menu in
                 return (menu.element, { self.state.selectedMenuIndex = menu.offset })
-            }
-        )
+            })
+        })
         .sdTimePicker(
             isPresented: self.$state.isTimePickerPresented,
             currentDate: self.$state.timePickerCurrentTime,
