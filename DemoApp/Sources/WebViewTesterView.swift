@@ -34,6 +34,7 @@ struct WebViewTesterView: View {
                 )
             }
         }
+        .navigationViewStyle(.stack)
         .tint(.Primary.purple400)
     }
 }
