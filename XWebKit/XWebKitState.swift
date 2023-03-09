@@ -11,6 +11,7 @@ class XWebKitState: ObservableObject {
 
     var cancellables = Set<AnyCancellable>()
 
+    @Published var isLoadingHidden: Bool = false
     @Published var loadingProgress: Double = 0.0
 
     // 현제 네이게이션 정보

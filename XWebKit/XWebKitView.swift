@@ -32,7 +32,7 @@ public struct XWebKitView: View {
     public var body: some View {
         ZStack {
             ComposedWebView(state: self.state)
-            if self.state.loadingProgress != 1 {
+            if !self.state.isLoadingHidden {
                 VStack {
                     ProgressView(value: self.state.loadingProgress)
                         .progressViewStyle(XWebKitProgressViewStyle())
