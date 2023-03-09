@@ -10,6 +10,8 @@ struct ComposedWebView: UIViewRepresentable {
 
     @ObservedObject var state: XWebKitState
 
+    private let refreshControl = UIRefreshControl()
+
     func makeCoordinator() -> WebViewCoordinator {
         WebViewCoordinator(self)
     }
@@ -21,7 +23,8 @@ struct ComposedWebView: UIViewRepresentable {
         webView.scrollView.delegate = context.coordinator
         self.setLoadingProgress(webView: webView)
         self.setEvaluateJavaScript(webView: webView)
-
+        self.setRefreshControl(webView: webView)
+        
         if let url = URL(string: self.state.urlString) {
             print(url)
             let urlRequest = URLRequest(url: url)
@@ -176,8 +179,22 @@ extension ComposedWebView {
             let progress = webView.rx.estimatedProgress.values
             for try await now in progress {
                 self.state.loadingProgress = now
+                if now == 1 {
+                    self.state.isLoadingHidden = true
+                    self.refreshControl.endRefreshing()
+                }
             }
         }
+    }
+
+    private func setRefreshControl(webView: WKWebView) {
+        Task {
+            let refresh = self.refreshControl.rx.controlEvent(.valueChanged).values
+            for try await _ in refresh {
+                webView.reload()
+            }
+        }
+        webView.scrollView.addSubview(self.refreshControl)
     }
 
 }
