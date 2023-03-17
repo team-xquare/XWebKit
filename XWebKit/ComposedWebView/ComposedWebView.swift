@@ -163,12 +163,13 @@ extension ComposedWebView {
 
         self.state.$selectedPeriod
             .combineLatest(self.state.$periodPickerId)
+            .filter { $0.0 != 0 }
             .sink {
                 print("periodPicker")
                 self.evaluateJavaScript(
                     webView: webView,
                     bridgeName: "periodPicker",
-                    data: "{ id: \"\($0.1)\", period: \($0.0)"
+                    data: "{ id: \"\($0.1)\", period: \($0.0) }"
                 )
             }
             .store(in: &self.state.cancellables)
