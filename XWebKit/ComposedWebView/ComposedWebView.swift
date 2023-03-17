@@ -61,7 +61,8 @@ extension ComposedWebView {
             "error",
             "photoPicker",
             "actionSheet",
-            "timePicker"
+            "timePicker",
+            "periodPicker"
         ], configuration: configuration)
 
         return configuration
@@ -156,6 +157,18 @@ extension ComposedWebView {
                     webView: webView,
                     bridgeName: "timePicker",
                     data: "{ id: \"\($0.1)\", time: \"\($0.0)\" }"
+                )
+            }
+            .store(in: &self.state.cancellables)
+
+        self.state.$selectedPeriod
+            .combineLatest(self.state.$periodPickerId)
+            .sink {
+                print("periodPicker")
+                self.evaluateJavaScript(
+                    webView: webView,
+                    bridgeName: "periodPicker",
+                    data: "{ id: \"\($0.1)\", period: \($0.0)"
                 )
             }
             .store(in: &self.state.cancellables)
