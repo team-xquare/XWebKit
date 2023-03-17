@@ -95,5 +95,9 @@ public struct XWebKitView: View {
             currentDate: self.$state.timePickerCurrentTime,
             date: self.$state.selectedTime
         )
+        .sdPeriodPicker(
+            isPresented: self.$state.isPeriodPickerPresented,
+            period: self.$state.selectedPeriod
+        )
     }
 }
