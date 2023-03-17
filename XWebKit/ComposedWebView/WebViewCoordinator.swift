@@ -28,6 +28,7 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler
         case "photoPicker": self.processPhotoPickerBridge(message.body)
         case "actionSheet": self.processActionSheet(message.body)
         case "timePicker": self.processTimePicker(message.body)
+        case "periodPicker": self.processPeriodPicker(message.body)
         default: break
         }
     }
@@ -122,6 +123,18 @@ extension WebViewCoordinator {
         self.parent.state.selectedTime = ""
         self.parent.state.timePickerId = messageBody.id
         self.parent.state.isTimePickerPresented = true
+    }
+
+    private func processPeriodPicker(_ messageBody: Any) {
+        guard let messageBody = try? MessageBodyDecoder.share.decode(PeriodResponse.self, from: messageBody)
+        else {
+            return
+        }
+        print("processPeriodPicker")
+        print(messageBody)
+        self.parent.state.selectedPeriod = messageBody.period ?? 1
+        self.parent.state.periodPickerId = messageBody.id
+        self.parent.state.isPeriodPickerPresented = true
     }
 
 }
