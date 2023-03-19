@@ -99,5 +99,8 @@ public struct XWebKitView: View {
             isPresented: self.$state.isPeriodPickerPresented,
             period: self.$state.selectedPeriod
         )
+        .onChange(of: self.state.selectedPeriod) { newValue in
+            print(newValue)
+        }
     }
 }
