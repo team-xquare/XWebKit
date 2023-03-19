@@ -78,8 +78,8 @@ public struct XWebKitView: View {
             isPresented: self.$state.isImageViewerPresented,
             images: self.state.images
         )
-        .sdErrorAlert(isPresented: self.$state.isErrorAlertPresented) {
-            SDErrorAlert(errerMessage: self.state.errorMessage)
+        .sdOkayAlert(isPresented: self.$state.isErrorAlertPresented) {
+            SDOkayAlert(title: "문제가 발생했습니다.", message: self.state.errorMessage)
         }
         .sdPhotoPicker(
             isPresented: self.$state.isPhotoPickerPresented,
@@ -99,8 +99,5 @@ public struct XWebKitView: View {
             isPresented: self.$state.isPeriodPickerPresented,
             period: self.$state.selectedPeriod
         )
-        .onChange(of: self.state.selectedPeriod) { newValue in
-            print(newValue)
-        }
     }
 }
