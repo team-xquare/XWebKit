@@ -61,7 +61,7 @@ class XWebKitState: ObservableObject {
     // periodPicker
     @Published var periodPickerId: String = ""
     @Published var isPeriodPickerPresented: Bool = false
-    @Published var selectedPeriod: Int = 1
+    @Published var selectedPeriod: Int?
 
     init(
         urlString: String,

@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ReactiveX/RxSwift", from: "6.5.0"),
-        .package(url: "https://github.com/semicolondsm/SemicolonDesign_iOS", from: "1.12.1")
+        .package(url: "https://github.com/semicolondsm/SemicolonDesign_iOS", from: "1.12.2")
     ],
     targets: [
         .target(
