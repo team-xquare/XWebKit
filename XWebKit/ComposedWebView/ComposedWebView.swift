@@ -49,7 +49,7 @@ extension ComposedWebView {
         configuration.preferences = preferences
 
         self.setWebCookie(cookie: [
-            "accessToken": self.state.accessToken
+            "accessToken": self.state.accessTokenGetter()
         ], configuration: configuration)
 
         self.registerBridge(name: [

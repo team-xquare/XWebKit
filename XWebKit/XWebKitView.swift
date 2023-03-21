@@ -6,10 +6,10 @@ public struct XWebKitView: View {
 
     @ObservedObject var state: XWebKitState
 
-    public init(urlString: String, accessToken: String = "") {
+    public init(urlString: String, accessTokenGetter: @escaping () -> String) {
         self.state = .init(
             urlString: urlString,
-            accessToken: accessToken,
+            accessTokenGetter: accessTokenGetter,
             isPresentated: .constant(true),
             naviagteRightButtonText: nil
         )
@@ -17,13 +17,13 @@ public struct XWebKitView: View {
 
     init(
         urlString: String,
-        accessToken: String,
+        accessTokenGetter: @escaping () -> String,
         isPresentated: Binding<Bool>,
         naviagteRightButtonText: String?
     ) {
         self.state = .init(
             urlString: urlString,
-            accessToken: accessToken,
+            accessTokenGetter: accessTokenGetter,
             isPresentated: isPresentated,
             naviagteRightButtonText: naviagteRightButtonText
         )
@@ -44,7 +44,7 @@ public struct XWebKitView: View {
                 destination: {
                     XWebKitView(
                         urlString: self.state.naviagteLink,
-                        accessToken: self.state.accessToken,
+                        accessTokenGetter: self.state.accessTokenGetter,
                         isPresentated: self.$state.needsToNavigate,
                         naviagteRightButtonText: self.state.naviagteRightButtonText
                     )
