@@ -6,7 +6,7 @@ public struct XWebKitView: View {
 
     @ObservedObject var state: XWebKitState
 
-    public init(urlString: String, accessTokenGetter: @escaping () -> String) {
+    public init(urlString: String, accessTokenGetter: @escaping () -> String = { "" }) {
         self.state = .init(
             urlString: urlString,
             accessTokenGetter: accessTokenGetter,
