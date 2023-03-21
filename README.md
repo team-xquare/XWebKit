@@ -11,7 +11,7 @@ import XWebKit
 NavigationView {
    XWebKitView(
       urlString: <URLString of webview>,
-      accessToken: <Access token>
+      accessTokenGetter: { <Access token> }
    )
 }
 .navigationViewStyle(.stack)

@@ -16,12 +16,19 @@ struct WebViewTesterView: View {
                 if !isSettingViewActive {
                     XWebKitView(
                         urlString: url,
-                        accessToken: token
+                        accessTokenGetter: {
+                            print("martin :: accessTokenGetter - \(token)")
+                            return token
+                        }
                     )
                 }
             }
             .navigationTitle("Tester")
             .toolbar {
+                Button("Refresh", action: {
+                    print("martin :: token refresh")
+                    self.token = "Refreshed TestToken"
+                })
                 NavigationLink(
                     isActive: $isSettingViewActive,
                     destination: {
