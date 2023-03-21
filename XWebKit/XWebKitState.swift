@@ -5,7 +5,7 @@ import Combine
 class XWebKitState: ObservableObject {
 
     var urlString: String = ""
-    var accessToken: String = ""
+    var accessTokenGetter: (() -> String)!
 
     var isPresentated: Binding<Bool>
 
@@ -65,12 +65,12 @@ class XWebKitState: ObservableObject {
 
     init(
         urlString: String,
-        accessToken: String = "",
+        accessTokenGetter: @escaping () -> String,
         isPresentated: Binding<Bool>,
         naviagteRightButtonText: String?
     ) {
         self.urlString = urlString
-        self.accessToken = accessToken
+        self.accessTokenGetter = accessTokenGetter
         self.isPresentated = isPresentated
         self.rightButtonText = naviagteRightButtonText
     }
