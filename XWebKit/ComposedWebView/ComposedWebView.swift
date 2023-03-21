@@ -205,6 +205,14 @@ extension ComposedWebView {
         Task {
             let refresh = self.refreshControl.rx.controlEvent(.valueChanged).values
             for try await _ in refresh {
+                await webView.configuration.websiteDataStore.httpCookieStore.setCookie(HTTPCookie(properties: [
+                    .domain: ".xquare.app",
+                    .path: "/",
+                    .name: "accessToken",
+                    .value: self.state.accessTokenGetter(),
+                    .secure: "TRUE",
+                    HTTPCookiePropertyKey("HttpOnly"): true
+                ])!)
                 webView.reload()
             }
         }
