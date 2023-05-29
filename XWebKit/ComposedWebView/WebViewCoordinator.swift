@@ -132,7 +132,6 @@ extension WebViewCoordinator {
         }
         print("processPeriodPicker")
         print(messageBody)
-        self.parent.state.selectedPeriod = messageBody.period
         self.parent.state.periodPickerId = messageBody.id
         self.parent.state.isPeriodPickerPresented = true
     }
