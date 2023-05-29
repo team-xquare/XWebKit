@@ -173,7 +173,6 @@ extension ComposedWebView {
                 )
             }
             .store(in: &self.state.cancellables)
-
     }
 
     private func evaluateJavaScript(webView: WKWebView, bridgeName: String, data: String) {
