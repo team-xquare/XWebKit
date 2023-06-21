@@ -81,6 +81,9 @@ public struct XWebKitView: View {
         .sdOkayAlert(isPresented: self.$state.isErrorAlertPresented) {
             SDOkayAlert(title: "문제가 발생했습니다.", message: self.state.errorMessage)
         }
+        .sdOkayAlert(isPresented: self.$state.isSuccessAlertPresented) {
+            SDOkayAlert(title: self.state.successTitle, message: self.state.successMessage)
+        }
         .sdPhotoPicker(
             isPresented: self.$state.isPhotoPickerPresented,
             selection: self.$state.selectedImages

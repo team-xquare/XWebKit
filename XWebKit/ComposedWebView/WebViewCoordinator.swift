@@ -24,6 +24,7 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler
         case "imageDetail": self.preocessImageDetailBridge(message.body)
         case "back": self.processBackBridge()
         case "confirm": self.processConfirmBridge(message.body)
+        case "success": self.processSuccessBridge(message.body)
         case "error": self.processErrorBridge(message.body)
         case "photoPicker": self.processPhotoPickerBridge(message.body)
         case "actionSheet": self.processActionSheet(message.body)
@@ -83,6 +84,15 @@ extension WebViewCoordinator {
         self.parent.state.alertConfirmText = messageBody.confirmText
         self.parent.state.alertCancelText = messageBody.cancelText
         self.parent.state.isAlertPresented = true
+    }
+
+    private func processSuccessBridge(_ messageBody: Any) {
+        guard let messageBody = try? MessageBodyDecoder.share.decode(SuccessRespose.self, from: messageBody) else {
+            return
+        }
+        self.parent.state.successMessage = messageBody.message
+        self.parent.state.successTitle = messageBody.title
+        self.parent.state.isSuccessAlertPresented = true
     }
 
     private func processErrorBridge(_ messageBody: Any) {

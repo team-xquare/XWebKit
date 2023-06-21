@@ -37,6 +37,11 @@ class XWebKitState: ObservableObject {
     @Published var alertCancelText: String = ""
     @Published var alertResponse: Bool?
 
+    //  success
+    @Published var isSuccessAlertPresented: Bool = false
+    @Published var successMessage: String = ""
+    @Published var successTitle: String = ""
+
     // error
     @Published var isErrorAlertPresented: Bool = false
     @Published var errorMessage: String = ""

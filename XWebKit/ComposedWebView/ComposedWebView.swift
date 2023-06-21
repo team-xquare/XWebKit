@@ -58,6 +58,7 @@ extension ComposedWebView {
             "imageDetail",
             "back",
             "confirm",
+            "success",
             "error",
             "photoPicker",
             "actionSheet",
