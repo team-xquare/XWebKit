@@ -23,7 +23,7 @@ struct SettingView: View {
                         SmallButton(
                             text: "기본값",
                             action: {
-                                self.tempUrl = "https://service.xquare.app/xbridge-test"
+                                self.tempUrl = "https://prod-server.xquare.app/xbridge-test"
                                 self.tempToken = "Test Token"
                             },
                             type: .lightColor
